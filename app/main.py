@@ -2,6 +2,7 @@
 
 import os
 import sys
+import streamlit as st
 
 # ============================================================
 # Tambahkan folder src ke sys.path agar modul bisa diimport
@@ -196,18 +197,38 @@ def compare_schemes(query, top_k=5):
 # ============================================================
 # 📋 Display Menu
 # ============================================================
-def display_menu():
-    """Tampilkan menu pilihan"""
-    print("\n" + "─"*70)
-    print("📋 MENU:")
-    print("─"*70)
-    print("1. Boolean Search      - Query dengan operator AND/OR/NOT")
-    print("2. VSM Search          - Vector Space Model dengan TF-IDF")
-    print("3. Compare Schemes     - Bandingkan Standard vs Sublinear TF-IDF")
-    print("4. Corpus Statistics   - Lihat info corpus")
-    print("5. Exit                - Keluar dari aplikasi")
-    print("─"*70)
+from src.boolean_ir import boolean_search
+from src.vsm_ir import vsm_search
+from src.eval import compare_schemes
+from src.search_engine import corpus_statistics
 
+st.title("🔍 MINI SEARCH ENGINE - STKI PROJECT")
+st.write("Information Retrieval System dengan Boolean & Vector Space Model")
+
+menu = display_menu()
+
+if "Boolean Search" in menu:
+    query = st.text_input("Masukkan query (gunakan AND, OR, NOT):")
+    if st.button("Cari"):
+        hasil = boolean_search(query)
+        st.write("### Hasil Pencarian:")
+        st.write(hasil)
+
+elif "VSM Search" in menu:
+    query = st.text_input("Masukkan query untuk VSM Search:")
+    if st.button("Cari"):
+        hasil = vsm_search(query)
+        st.write("### Hasil Pencarian TF-IDF:")
+        st.write(hasil)
+
+elif "Compare Schemes" in menu:
+    if st.button("Bandingkan"):
+        hasil = compare_schemes()
+        st.write(hasil)
+
+elif "Corpus Statistics" in menu:
+    if st.button("Tampilkan Info"):
+        corpus_statistics()
 # ============================================================
 # 🎯 Main Interface (Interactive CLI)
 # ============================================================
