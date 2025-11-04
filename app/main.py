@@ -4,6 +4,17 @@ import os
 import sys
 import streamlit as st
 
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+import streamlit as st
+from src.boolean_ir import boolean_search
+from src.vsm_ir import vsm_search
+from src.eval import compare_schemes
+from src.search_engine import corpus_statistics
+
+
 # ============================================================
 # Tambahkan folder src ke sys.path agar modul bisa diimport
 # ============================================================
