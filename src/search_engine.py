@@ -8,6 +8,32 @@ import os
 from boolean_ir import boolean_retrieval, documents as bool_docs
 from vsm_ir import search_vsm, set_weighting_scheme, documents, vocabulary
 
+def corpus_statistics():
+    """
+    Tampilkan statistik corpus yang sudah di-load
+    
+    Returns:
+        dict: informasi corpus
+    """
+    stats = {
+        'total_documents': len(documents),
+        'vocabulary_size': len(vocabulary),
+        'document_list': sorted(documents.keys()),
+        'avg_doc_length': sum(len(doc) for doc in documents.values()) / len(documents) if documents else 0
+    }
+    
+    print(f"\n{'='*70}")
+    print(f"📚 CORPUS STATISTICS")
+    print(f"{'='*70}")
+    print(f"Total Documents    : {stats['total_documents']}")
+    print(f"Vocabulary Size    : {stats['vocabulary_size']} unique terms")
+    print(f"Avg Document Length: {stats['avg_doc_length']:.1f} terms")
+    print(f"Document List      : {', '.join(stats['document_list'][:5])}...")
+    print(f"{'='*70}")
+    
+    return stats
+
+
 # =========================================================
 # 🔍 SEARCH ENGINE ORCHESTRATOR
 # =========================================================
