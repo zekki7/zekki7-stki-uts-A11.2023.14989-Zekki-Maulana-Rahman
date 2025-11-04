@@ -4,14 +4,14 @@ import os
 import sys
 import streamlit as st
 
-import sys
-import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 
 import streamlit as st
 from src.boolean_ir import boolean_search
 from src.vsm_ir import vsm_search
-from src.eval import compare_schemes
+from src.eval import compare_vsm_schemes as compare_schemes
 from src.search_engine import corpus_statistics
 
 
@@ -149,7 +149,7 @@ def show_results_boolean(query):
 # ============================================================
 # ⚖️ Compare VSM Weighting Schemes
 # ============================================================
-def compare_schemes(query, top_k=5):
+def compare_vsm_schemes(query, top_k=5):
     """
     Bandingkan 2 skema weighting untuk query yang sama
     
@@ -210,7 +210,7 @@ def compare_schemes(query, top_k=5):
 # ============================================================
 from src.boolean_ir import boolean_search
 from src.vsm_ir import vsm_search
-from src.eval import compare_schemes
+from src.eval import compare_vsm_schemes as compare_schemes 
 from src.search_engine import corpus_statistics
 
 st.title("🔍 MINI SEARCH ENGINE - STKI PROJECT")
@@ -234,7 +234,7 @@ elif "VSM Search" in menu:
 
 elif "Compare Schemes" in menu:
     if st.button("Bandingkan"):
-        hasil = compare_schemes()
+        hasil = compare_vsm_schemes(...)
         st.write(hasil)
 
 elif "Corpus Statistics" in menu:
@@ -336,7 +336,7 @@ def main():
                 else:
                     top_k = 5
                 
-                compare_schemes(query, top_k=top_k)
+                compare_vsm_schemes(query, top_k=top_k)
             
             # ═══════════════════════════════════════════════════════
             # MENU 4: CORPUS STATISTICS
