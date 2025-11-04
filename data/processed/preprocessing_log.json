@@ -1,0 +1,110 @@
+{
+  "summary": {
+    "total_files": 10,
+    "total_stopwords": 123,
+    "input_path": "D:\\JACKY\\stki-uts-A11.2023.14989-Zekki Maulana Rahman\\data\\raw",
+    "output_path": "D:\\JACKY\\stki-uts-A11.2023.14989-Zekki Maulana Rahman\\data\\processed"
+  },
+  "files": [
+    {
+      "filename": "doc1.txt",
+      "original_chars": 786,
+      "tokens_after_tokenize": 126,
+      "tokens_after_stopword": 100,
+      "final_tokens": 100,
+      "unique_tokens": 73,
+      "stopwords_removed": 26,
+      "reduction_rate": 20.63
+    },
+    {
+      "filename": "doc10.txt",
+      "original_chars": 564,
+      "tokens_after_tokenize": 83,
+      "tokens_after_stopword": 71,
+      "final_tokens": 71,
+      "unique_tokens": 61,
+      "stopwords_removed": 12,
+      "reduction_rate": 14.46
+    },
+    {
+      "filename": "doc2.txt",
+      "original_chars": 789,
+      "tokens_after_tokenize": 121,
+      "tokens_after_stopword": 99,
+      "final_tokens": 99,
+      "unique_tokens": 77,
+      "stopwords_removed": 22,
+      "reduction_rate": 18.18
+    },
+    {
+      "filename": "doc3.txt",
+      "original_chars": 679,
+      "tokens_after_tokenize": 99,
+      "tokens_after_stopword": 84,
+      "final_tokens": 84,
+      "unique_tokens": 69,
+      "stopwords_removed": 15,
+      "reduction_rate": 15.15
+    },
+    {
+      "filename": "doc4.txt",
+      "original_chars": 690,
+      "tokens_after_tokenize": 101,
+      "tokens_after_stopword": 86,
+      "final_tokens": 86,
+      "unique_tokens": 70,
+      "stopwords_removed": 15,
+      "reduction_rate": 14.85
+    },
+    {
+      "filename": "doc5.txt",
+      "original_chars": 619,
+      "tokens_after_tokenize": 94,
+      "tokens_after_stopword": 82,
+      "final_tokens": 82,
+      "unique_tokens": 65,
+      "stopwords_removed": 12,
+      "reduction_rate": 12.77
+    },
+    {
+      "filename": "doc6.txt",
+      "original_chars": 647,
+      "tokens_after_tokenize": 95,
+      "tokens_after_stopword": 81,
+      "final_tokens": 81,
+      "unique_tokens": 64,
+      "stopwords_removed": 14,
+      "reduction_rate": 14.74
+    },
+    {
+      "filename": "doc7.txt",
+      "original_chars": 580,
+      "tokens_after_tokenize": 83,
+      "tokens_after_stopword": 71,
+      "final_tokens": 71,
+      "unique_tokens": 56,
+      "stopwords_removed": 12,
+      "reduction_rate": 14.46
+    },
+    {
+      "filename": "doc8.txt",
+      "original_chars": 541,
+      "tokens_after_tokenize": 83,
+      "tokens_after_stopword": 68,
+      "final_tokens": 68,
+      "unique_tokens": 53,
+      "stopwords_removed": 15,
+      "reduction_rate": 18.07
+    },
+    {
+      "filename": "doc9.txt",
+      "original_chars": 533,
+      "tokens_after_tokenize": 84,
+      "tokens_after_stopword": 70,
+      "final_tokens": 70,
+      "unique_tokens": 56,
+      "stopwords_removed": 14,
+      "reduction_rate": 16.67
+    }
+  ]
+}
