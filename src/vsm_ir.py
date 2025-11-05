@@ -178,6 +178,10 @@ def search_vsm(query, top_k=5, verbose=True):
     
     # Process query ke TF-IDF vector (sesuai current scheme)
     q_vec = process_query(query, scheme=current_scheme).reshape(1, -1)
+
+    if np.all(q_vec == 0):
+        print("⚠️ Query tidak ada di vocabulary. Tidak bisa dihitung similarity.")
+        return []
     
     # Hitung cosine similarity
     cos_sim = cosine_similarity(tfidf_matrix, q_vec).flatten()
