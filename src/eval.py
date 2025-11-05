@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 from collections import defaultdict
 
 # Import dari modul yang sudah dibuat
+import sys, os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from boolean_ir import boolean_retrieval, truth_set as boolean_truth_set, evaluate as boolean_evaluate
 from vsm_ir import search_vsm, set_weighting_scheme, truth_set as vsm_truth_set
 from vsm_ir import precision_at_k, recall_at_k, average_precision, mean_average_precision
