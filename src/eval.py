@@ -438,3 +438,5 @@ if __name__ == "__main__":
         print(f"\n❌ ERROR: {e}")
         import traceback
         traceback.print_exc()
+
+    compare_schemes = compare_vsm_schemes
