@@ -35,6 +35,9 @@ def ndcg_at_k(retrieved_docs, relevant_docs, k):
     Returns:
         float: nDCG@k score
     """
+    # Pastikan k adalah integer
+    k = int(k) if k else 5
+    
     # Handle jika retrieved_docs adalah list of dicts (dari VSM)
     if retrieved_docs and isinstance(retrieved_docs[0], dict):
         retrieved_docs = [r['doc_id'] for r in retrieved_docs]
@@ -140,6 +143,9 @@ def evaluate_vsm_model(weighting="standard", top_k=5, truth_set=None, verbose=Tr
     Returns:
         tuple: (DataFrame results, MAP score)
     """
+    # ✅ Pastikan top_k adalah integer
+    top_k = int(top_k) if top_k else 5
+    
     if truth_set is None:
         truth_set = vsm_truth_set
     
@@ -217,38 +223,38 @@ def evaluate_vsm_model(weighting="standard", top_k=5, truth_set=None, verbose=Tr
 # ⚖️ COMPARISON: VSM WEIGHTING SCHEMES
 # =========================================================
 
-def compare_vsm_schemes(top_k=5, truth_set=None, verbose=True):
+def compare_vsm_schemes(top_k=5, truth_set=None, verbose=False):
     """
     Bandingkan performa 2 skema weighting VSM
     
     Args:
-        top_k: jumlah top documents
+        top_k: jumlah top documents (integer)
         truth_set: dict {query: set(relevant_docs)}
         verbose: tampilkan detail
     
     Returns:
         pd.DataFrame: comparison results
     """
+    # ✅ PERBAIKAN: Pastikan top_k adalah integer
+    top_k = int(top_k) if top_k else 5
+    
     if truth_set is None:
         truth_set = vsm_truth_set
     
-    print("\n" + "="*70)
-    print("⚖️  COMPARISON: VSM WEIGHTING SCHEMES")
-    print("="*70)
-    print(f"Comparing: TF-IDF Standard vs TF-IDF Sublinear")
-    print(f"Top-K: {top_k}")
-    print(f"Queries: {len(truth_set)}")
-    print("="*70)
+    if verbose:
+        print("\n" + "="*70)
+        print("⚖️  COMPARISON: VSM WEIGHTING SCHEMES")
+        print("="*70)
+        print(f"Comparing: TF-IDF Standard vs TF-IDF Sublinear")
+        print(f"Top-K: {top_k}")
+        print(f"Queries: {len(truth_set)}")
+        print("="*70)
     
     # Evaluasi kedua scheme
-    results_std, map_std = evaluate_vsm_model("standard", top_k, truth_set, verbose=verbose)
-    results_sub, map_sub = evaluate_vsm_model("sublinear", top_k, truth_set, verbose=verbose)
+    results_std, map_std = evaluate_vsm_model("standard", top_k, truth_set, verbose=False)
+    results_sub, map_sub = evaluate_vsm_model("sublinear", top_k, truth_set, verbose=False)
     
     # Comparison table
-    print("\n" + "="*70)
-    print("📊 COMPARISON SUMMARY")
-    print("="*70)
-    
     comparison_df = pd.DataFrame({
         'Metric': [
             f'Mean P@{top_k}', 
@@ -279,34 +285,38 @@ def compare_vsm_schemes(top_k=5, truth_set=None, verbose=True):
         (comparison_df['Delta'] / comparison_df['Standard']) * 100
     ).round(2)
     
-    print(comparison_df.to_string(index=False))
-    
-    # Analisis
-    print("\n" + "="*70)
-    print("💡 ANALISIS & INTERPRETASI")
-    print("="*70)
-    
-    if map_sub > map_std:
-        winner = "TF-IDF Sublinear"
-        improvement = ((map_sub - map_std) / map_std * 100)
-        print(f"✅ {winner} menunjukkan performa LEBIH BAIK")
-        print(f"   MAP@{top_k} meningkat {improvement:.2f}% dibanding Standard")
-        print(f"\n🔍 Interpretasi:")
-        print(f"   Sublinear scaling (1 + log TF) mengurangi dominasi term yang")
-        print(f"   sangat frequent, sehingga meningkatkan akurasi retrieval.")
-    elif map_sub < map_std:
-        winner = "TF-IDF Standard"
-        decline = ((map_std - map_sub) / map_std * 100)
-        print(f"✅ {winner} menunjukkan performa LEBIH BAIK")
-        print(f"   MAP@{top_k} dari Sublinear turun {decline:.2f}%")
-        print(f"\n🔍 Interpretasi:")
-        print(f"   Untuk korpus ini, raw TF count lebih efektif karena distribusi")
-        print(f"   term frequency sudah balanced setelah preprocessing.")
-    else:
-        print(f"⚖️  Kedua skema menunjukkan performa SETARA")
-        print(f"   MAP@{top_k}: {map_std:.3f}")
-    
-    print("="*70)
+    if verbose:
+        print("\n" + "="*70)
+        print("📊 COMPARISON SUMMARY")
+        print("="*70)
+        print(comparison_df.to_string(index=False))
+        
+        # Analisis
+        print("\n" + "="*70)
+        print("💡 ANALISIS & INTERPRETASI")
+        print("="*70)
+        
+        if map_sub > map_std:
+            winner = "TF-IDF Sublinear"
+            improvement = ((map_sub - map_std) / map_std * 100)
+            print(f"✅ {winner} menunjukkan performa LEBIH BAIK")
+            print(f"   MAP@{top_k} meningkat {improvement:.2f}% dibanding Standard")
+            print(f"\n🔍 Interpretasi:")
+            print(f"   Sublinear scaling (1 + log TF) mengurangi dominasi term yang")
+            print(f"   sangat frequent, sehingga meningkatkan akurasi retrieval.")
+        elif map_sub < map_std:
+            winner = "TF-IDF Standard"
+            decline = ((map_std - map_sub) / map_std * 100)
+            print(f"✅ {winner} menunjukkan performa LEBIH BAIK")
+            print(f"   MAP@{top_k} dari Sublinear turun {decline:.2f}%")
+            print(f"\n🔍 Interpretasi:")
+            print(f"   Untuk korpus ini, raw TF count lebih efektif karena distribusi")
+            print(f"   term frequency sudah balanced setelah preprocessing.")
+        else:
+            print(f"⚖️  Kedua skema menunjukkan performa SETARA")
+            print(f"   MAP@{top_k}: {map_std:.3f}")
+        
+        print("="*70)
     
     return comparison_df
 
@@ -326,6 +336,8 @@ def evaluate_all_models(top_k=5, verbose=True):
     Returns:
         dict: hasil evaluasi semua model
     """
+    top_k = int(top_k) if top_k else 5
+    
     print("\n" + "="*70)
     print("🎯 EVALUASI KOMPREHENSIF - SEMUA MODEL")
     print("="*70)
@@ -392,6 +404,12 @@ def evaluate_all_models(top_k=5, verbose=True):
 
 
 # =========================================================
+# 🔗 ALIAS untuk backward compatibility
+# =========================================================
+compare_schemes = compare_vsm_schemes
+
+
+# =========================================================
 # 🚀 MAIN EXECUTION
 # =========================================================
 
@@ -440,5 +458,3 @@ if __name__ == "__main__":
         print(f"\n❌ ERROR: {e}")
         import traceback
         traceback.print_exc()
-
-    compare_schemes = compare_vsm_schemes

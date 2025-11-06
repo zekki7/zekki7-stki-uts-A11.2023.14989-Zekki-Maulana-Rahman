@@ -2,8 +2,8 @@
   "summary": {
     "total_files": 10,
     "total_stopwords": 123,
-    "input_path": "D:\\JACKY\\stki-uts-A11.2023.14989-Zekki Maulana Rahman\\data\\raw",
-    "output_path": "D:\\JACKY\\stki-uts-A11.2023.14989-Zekki Maulana Rahman\\data\\processed"
+    "input_path": "D:\\SMSTR_5\\STKI\\stki-uts-A11.2023.14989-Zekki Maulana Rahman\\data\\raw",
+    "output_path": "D:\\SMSTR_5\\STKI\\stki-uts-A11.2023.14989-Zekki Maulana Rahman\\data\\processed"
   },
   "files": [
     {

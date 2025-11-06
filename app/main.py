@@ -114,7 +114,7 @@ def display_menu():
 # 🚀 Main Interface
 # ============================================================
 st.title("🔍 MINI SEARCH ENGINE - STKI PROJECT")
-st.caption("Information Retrieval System — Boolean & Vector Space Model")
+st.caption("Yuk, intip review makanan enak hari ini 😋 Information Retrieval System — Boolean & Vector Space Model -")
 menu = display_menu()
 
 # ============================================================
@@ -167,13 +167,31 @@ elif menu == "VSM Search":
 # ============================================================
 elif menu == "Compare Schemes":
     st.header("⚖️ Compare TF-IDF Schemes")
-    query = st.text_input("Masukkan query untuk perbandingan:")
-    if st.button("Bandingkan"):
-        if query.strip():
-            hasil = compare_vsm_schemes(query)
-            st.write(hasil)
-        else:
-            st.warning("Masukkan query terlebih dahulu.")
+    st.write("Bandingkan performa TF-IDF Standard vs Sublinear berdasarkan truth set.")
+
+    # Input jumlah top-K dokumen
+    top_k = st.slider(
+        "Top-K dokumen untuk evaluasi:",
+        min_value=1,
+        max_value=10,
+        value=5,
+        help="Jumlah dokumen teratas yang akan dievaluasi."
+    )
+
+    if st.button("🔍 Jalankan Perbandingan"):
+        with st.spinner("Sedang menjalankan evaluasi perbandingan..."):
+            try:
+                hasil = compare_vsm_schemes(top_k=int(top_k), truth_set=None, verbose=False)
+                st.success("✅ Evaluasi selesai!")
+                st.dataframe(hasil, use_container_width=True)
+
+                st.subheader("📊 Visualisasi Perbandingan")
+                chart_data = hasil.set_index('Metric')[['Standard', 'Sublinear']]
+                st.bar_chart(chart_data)
+
+            except Exception as e:
+                st.error(f"❌ Terjadi kesalahan: {str(e)}")
+                st.exception(e)
 
 # ============================================================
 # 📊 CORPUS STATS

@@ -481,3 +481,12 @@ if __name__ == "__main__":
     comparison_results = compare_weighting_schemes(top_k=5)
     
     print(f"\n✅ Evaluation & Comparison completed!")
+
+# ============================================================
+# 🧩 Compatibility fix for eval.py (import issue)
+# ============================================================
+
+# Alias agar eval.py bisa import dengan benar
+search_vsm = search_vsm
+set_weighting_scheme = set_weighting_scheme
+truth_set = truth_set
