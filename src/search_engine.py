@@ -3,7 +3,7 @@
 import argparse
 import sys
 import os
-
+import pandas as pd
 # Import dari modul yang sudah dibuat
 from boolean_ir import boolean_retrieval, documents as bool_docs
 from vsm_ir import search_vsm, set_weighting_scheme, documents, vocabulary
@@ -288,6 +288,44 @@ Examples:
             # Mode normal
             run_vsm_search(args.query, top_k=args.k, weighting=args.weighting, verbose=True)
 
+# =========================================================
+# 📊 CORPUS STATISTICS (Versi untuk Streamlit)
+# =========================================================
+
+def corpus_statistics():
+    """
+    Tampilkan statistik corpus yang sudah di-load, 
+    dan kembalikan sebagai dict + DataFrame untuk Streamlit.
+    """
+    stats = {
+        'Total Documents': len(documents),
+        'Vocabulary Size': len(vocabulary),
+        'Average Doc Length': sum(len(doc) for doc in documents.values()) / len(documents) if documents else 0,
+    }
+
+    # Siapkan DataFrame daftar dokumen (misal: 5 pertama)
+    doc_data = []
+    for doc_id, tokens in list(documents.items())[:10]:  # ambil 10 dokumen pertama
+        doc_data.append({
+            'Document ID': doc_id,
+            'Token Count': len(tokens),
+            'Preview': ' '.join(tokens[:15]) + ('...' if len(tokens) > 15 else '')
+        })
+
+    df_docs = pd.DataFrame(doc_data)
+
+    # Print ke terminal juga (opsional)
+    print(f"\n{'='*70}")
+    print(f"📚 CORPUS STATISTICS")
+    print(f"{'='*70}")
+    for k, v in stats.items():
+        if isinstance(v, float):
+            print(f"{k:<20}: {v:.1f}")
+        else:
+            print(f"{k:<20}: {v}")
+    print(f"{'='*70}")
+
+    return stats, df_docs
 
 # =========================================================
 # 🚀 ENTRY POINT

@@ -3,6 +3,7 @@ import os
 import sys
 import streamlit as st
 
+
 # Path setup
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -196,8 +197,30 @@ elif menu == "Compare Schemes":
 # ============================================================
 # 📊 CORPUS STATS
 # ============================================================
+# ============================================================
+# 📊 CORPUS STATS
+# ============================================================
+# ============================================================
+# 📊 CORPUS STATISTICS MODE
+# ============================================================
 elif menu == "Corpus Statistics":
     st.header("📚 Corpus Statistics")
-    if st.button("Tampilkan Info"):
-        corpus_statistics()
-        st.success("Statistik corpus ditampilkan di console.")
+    st.write("Lihat statistik dari corpus yang sudah diproses di sistem ini.")
+
+    if st.button("Tampilkan Statistik Corpus"):
+        try:
+            stats, df_docs = corpus_statistics()
+
+            # Tampilkan metrik utama
+            st.metric("Total Documents", stats["Total Documents"])
+            st.metric("Vocabulary Size", stats["Vocabulary Size"])
+            st.metric("Average Doc Length", f"{stats['Average Doc Length']:.1f} terms")
+
+            # Tampilkan tabel detail dokumen
+            st.subheader("📄 Detail Dokumen")
+            st.dataframe(df_docs, use_container_width=True)
+
+        except Exception as e:
+            st.error("❌ Terjadi kesalahan saat memuat statistik corpus.")
+            st.exception(e)
+
